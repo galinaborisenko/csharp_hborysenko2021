@@ -42,29 +42,70 @@ namespace WebAddressBookTests
         [Test]
         public void GroupCreationTest()
         {
-            driver.Navigate().GoToUrl(baseURL);
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Click();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Clear();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).SendKeys("admin");
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Click();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Clear();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).SendKeys("secret");
-            driver.FindElement(By.CssSelector("#LoginForm input[type=\"submit\"]")).Click();
-            driver.FindElement(By.CssSelector(".admin>a[href*=\"group\"]")).Click();
-            driver.FindElement(By.CssSelector("form[method=\"get\"]>input[name=\"new\"]")).Click();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).Click();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).SendKeys("family");
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).Click();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).SendKeys("test");
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).Click();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).SendKeys("test");
-            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[type=\"submit\"]")).Click();
-            driver.FindElement(By.CssSelector("div.msgbox a[href*=\"group\"]")).Click();
+            OpenHomePage();
+            Login("admin", "secret");
+            OpenGroupsPage();
+            InitGroupCreation();
+            FillGroupForm("new group", "test", "test");
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+            Logout();
+        }
+
+        private void Logout()
+        {
             driver.FindElement(By.CssSelector(".header a[onclick*=\"logout\"]")).Click();
         }
+
+        private void ReturnToGroupsPage()
+        {
+            driver.FindElement(By.CssSelector("div.msgbox a[href*=\"group\"]")).Click();
+        }
+
+        private void SubmitGroupCreation()
+        {
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[type=\"submit\"]")).Click();
+        }
+
+        private void FillGroupForm(string name, string header, string footer)
+        {
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).Click();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).Clear();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>input[name=\"group_name\"]")).SendKeys(name);
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).Click();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).Clear();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_header\"]")).SendKeys(header);
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).Click();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).Clear();
+            driver.FindElement(By.CssSelector("form[method=\"post\"]>textarea[name=\"group_footer\"]")).SendKeys(footer);
+        }
+
+        private void InitGroupCreation()
+        {
+            driver.FindElement(By.CssSelector("form[method=\"get\"]>input[name=\"new\"]")).Click();
+        }
+
+        private void OpenGroupsPage()
+        {
+            driver.FindElement(By.CssSelector(".admin>a[href*=\"group\"]")).Click();
+        }
+
+        private void Login(string userName, string password)
+        {
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Click();
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Clear();
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).SendKeys(userName);
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Click();
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Clear();
+            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).SendKeys(password);
+            driver.FindElement(By.CssSelector("#LoginForm input[type=\"submit\"]")).Click();
+        }
+
+        private void OpenHomePage()
+        {
+            driver.Navigate().GoToUrl(baseURL);
+        }
+
         private bool IsElementPresent(By by)
         {
             try
