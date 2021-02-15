@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
-    class Circle
+    class Circle : Figure
     {
         private int radius;
 
@@ -24,5 +24,10 @@ namespace addressbook_web_tests
                 radius = value;
             }
         }
+
+       
+
+
+
     }
 }

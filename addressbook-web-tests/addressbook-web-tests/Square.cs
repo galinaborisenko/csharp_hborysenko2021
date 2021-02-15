@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
-    class Square
+    class Square : Figure
     {
         private int size;
-
+       
         public Square(int size)
         {
             this.size = size;
-
         }
 
        public int Size
@@ -25,6 +24,7 @@ namespace addressbook_web_tests
                 size = value;
             }
         }
-        
+
+
     }
 }

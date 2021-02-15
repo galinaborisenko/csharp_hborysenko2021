@@ -19,7 +19,10 @@ namespace addressbook_web_tests
 
             s3.Size = 15;//set a new size for s3
 
-            Assert.AreEqual(s3.Size, 15); 
+            Assert.AreEqual(s3.Size, 15);
+
+            s2.Colored = true;//set colored true to s2 to check something later
+
 
         }
 
