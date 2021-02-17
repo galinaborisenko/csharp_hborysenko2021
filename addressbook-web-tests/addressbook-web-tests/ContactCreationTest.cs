@@ -45,7 +45,9 @@ namespace WebAddressBookTests
             OpenHomePage();
             Login(new AccountData("admin", "secret"));
             OpenEditPage();
-            FillContactForm();
+            ContactData contact = new ContactData("first", "last");
+            contact.Middlename = "middle";
+            FillContactForm(contact);
             SubmitContactCreation();
             ReturnToEditPage();
             Logout();
@@ -66,14 +68,17 @@ namespace WebAddressBookTests
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"submit\"]")).Click();
         }
 
-        private void FillContactForm()
+        private void FillContactForm(ContactData contact)
         {
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).Click();
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).SendKeys("firstname");
+            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).SendKeys(contact.Firstname);
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).Click();
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).SendKeys("lastname");
+            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).SendKeys(contact.Lastname);
+            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).Click();
+            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).Clear();
+            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).SendKeys(contact.Middlename);
         }
 
         private void OpenEditPage()
