@@ -1,40 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
+
 namespace WebAddressBookTests
 {
-    public class TestBase 
+    public class ApplicationManager
     {
         protected IWebDriver driver;
-        private StringBuilder verificationErrors;
         protected string baseURL;
+
         protected LoginLogoutHelper loginLogoutHelper;
         protected NavigationHelper navigationHelper;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-       
-        [SetUp]
-        public void SetupTest()
+
+        public ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
-            verificationErrors = new StringBuilder();
+
             loginLogoutHelper = new LoginLogoutHelper(driver);
             navigationHelper = new NavigationHelper(driver, baseURL);
             groupHelper = new GroupHelper(driver);
             contactHelper = new ContactHelper(driver);
-
         }
 
-        [TearDown]
-        public void TeardownTest()
-        {
+        public void Stop() {
             try
             {
                 driver.Quit();
@@ -43,7 +40,38 @@ namespace WebAddressBookTests
             {
                 // Ignore errors if unable to close the browser
             }
-            Assert.AreEqual("", verificationErrors.ToString());
-        }       
+            
+        }
+
+        public LoginLogoutHelper Auth
+        {
+            get {
+                return loginLogoutHelper;
+            }     
+        }
+
+        public NavigationHelper Navigator
+        {
+            get
+            {
+                return navigationHelper;
+            }
+        }
+
+        public GroupHelper Groups
+        {
+            get
+            {
+                return groupHelper;
+            }
+        }
+
+        public ContactHelper Contacts
+        {
+            get
+            {
+                return contactHelper;
+            }
+        }
     }
 }
