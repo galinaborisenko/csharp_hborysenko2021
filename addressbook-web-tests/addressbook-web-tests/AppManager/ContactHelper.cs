@@ -11,37 +11,87 @@ namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver)
-          : base(driver)
+        public ContactHelper(ApplicationManager manager)
+          : base(manager)
         {
         }
+        public ContactHelper Create(ContactData contact)
+        {
+            InitContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnToContactPage();
+            return this;
+        }
 
-        public void InitContactCreation()
+        public ContactHelper Modify(ContactData newData)
+        {
+            InitContactModification();
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper Remove(int p)
+        {
+            SelectContact(p);
+            RemoveContact();
+            return this;
+        }
+
+        public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.CssSelector(".all>a[href*=\"edit\"]")).Click();
+            return this;
         }
 
-        public void ReturnToEditPage()
+        public ContactHelper ReturnToContactPage()
         {
             driver.FindElement(By.CssSelector("div.msgbox a[href*=\"edit\"]")).Click();
+            return this;
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).Click();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"firstname\"]")).SendKeys(contact.Firstname);
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).Click();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"lastname\"]")).SendKeys(contact.Lastname);
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).Click();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).Clear();
-            driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"middlename\"]")).SendKeys(contact.Middlename);
+            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).Click();
+            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).Clear();
+            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).SendKeys(contact.Firstname);
+            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).Click();
+            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).Clear();
+            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).SendKeys(contact.Lastname);
+            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).Click();
+            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).Clear();
+            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).SendKeys(contact.Middlename);
+            return this;
         }
 
-        public void SubmitContactCreation()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.CssSelector("form[name=\"theform\"]>input[name=\"submit\"]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("(//input[@onclick='DeleteSel()'])")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+        public ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.CssSelector(".center a[href*=\"edit\"]")).Click(); ;
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.CssSelector("form[method=\"post\"] input[name=\"update\"]")).Click();
+            return this;
         }
     }
 }
