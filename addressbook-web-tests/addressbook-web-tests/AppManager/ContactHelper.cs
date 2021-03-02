@@ -53,15 +53,9 @@ namespace WebAddressBookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).Click();
-            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).Clear();
-            driver.FindElement(By.CssSelector("input[name=\"firstname\"]")).SendKeys(contact.Firstname);
-            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).Click();
-            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).Clear();
-            driver.FindElement(By.CssSelector("input[name=\"lastname\"]")).SendKeys(contact.Lastname);
-            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).Click();
-            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).Clear();
-            driver.FindElement(By.CssSelector("input[name=\"middlename\"]")).SendKeys(contact.Middlename);
+            Type(By.CssSelector("input[name=\"firstname\"]"), contact.Firstname);
+            Type(By.CssSelector("input[name=\"lastname\"]"), contact.Lastname);
+            Type(By.CssSelector("input[name=\"middlename\"]"), contact.Middlename);
             return this;
         }
 

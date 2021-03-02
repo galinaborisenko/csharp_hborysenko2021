@@ -16,19 +16,41 @@ namespace WebAddressBookTests
             : base (manager)
         {
         }
+
         public void Login(AccountData account)
         {
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Click();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).Clear();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"user\"]")).SendKeys(account.Username);
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Click();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).Clear();
-            driver.FindElement(By.CssSelector("#LoginForm input[name=\"pass\"]")).SendKeys(account.Password);
-            driver.FindElement(By.CssSelector("#LoginForm input[type=\"submit\"]")).Click();
+            if (IsLoggedIn())
+            {
+                if (IsLoggedIn(account))
+                {
+                    return;
+                }
+                Logout();
+            }
+            Type(By.Name("user"),account.Username);
+            Type(By.Name("pass"), account.Password);
+            driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
         }
+
         public void Logout()
         {
-            driver.FindElement(By.CssSelector(".header a[onclick*=\"logout\"]")).Click();
+            if (IsLoggedIn()) 
+            {
+                driver.FindElement(By.CssSelector(".header a[onclick*=\"logout\"]")).Click();
+            }        
         }
+
+        public bool IsLoggedIn()
+        {
+            return IsElementPresent(By.Name("logout"));
+        }
+
+        public bool IsLoggedIn(AccountData account)
+        {
+            return IsLoggedIn()
+                && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
+                == "(" + account.Username + ")";
+        }
+
     }
 }
