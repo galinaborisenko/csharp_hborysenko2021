@@ -15,6 +15,7 @@ namespace WebAddressBookTests
           : base(manager)
         {
         }
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
@@ -47,7 +48,7 @@ namespace WebAddressBookTests
 
         public ContactHelper ReturnToContactPage()
         {
-            driver.FindElement(By.CssSelector("div.msgbox a[href*=\"edit\"]")).Click();
+            driver.FindElement(By.CssSelector("div.msgbox a[href*=\"index\"]")).Click();
             return this;
         }
 
@@ -86,6 +87,23 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.CssSelector("form[method=\"post\"] input[name=\"update\"]")).Click();
             return this;
+        }
+
+        public bool IsContactElementExists()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
+        internal void CreateContactIfDoesntExists(ContactData contact)
+        {
+            if (IsContactElementExists())
+            {
+                return;
+            }
+            else
+            {
+                Create(contact);
+            }
         }
     }
 }

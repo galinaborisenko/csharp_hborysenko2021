@@ -12,7 +12,14 @@ namespace WebAddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
+            //prepare
+            ContactData contact = new ContactData("test", "test");
+            app.Contacts.CreateContactIfDoesntExists(contact);
+
+            //action
             app.Contacts.Remove(1);
+
+            //verification
         }
     }
 }

@@ -37,6 +37,8 @@ namespace WebAddressBookTests
             if (IsLoggedIn()) 
             {
                 driver.FindElement(By.CssSelector(".header a[onclick*=\"logout\"]")).Click();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                driver.FindElement(By.Name("user"));
             }        
         }
 

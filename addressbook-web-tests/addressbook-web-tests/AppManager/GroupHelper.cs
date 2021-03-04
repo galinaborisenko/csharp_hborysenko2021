@@ -94,7 +94,27 @@ namespace WebAddressBookTests
             return this;
         }
 
-        
+        public bool IsGroupElementExists()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public void CreateGroupIfDoesntExists(GroupData group)
+        {
+            if (IsGroupElementExists())
+            {
+                return;
+            }
+            else
+            {             
+                Create(group);
+            }
+        }
+
+
+
+
+
 
 
     }
