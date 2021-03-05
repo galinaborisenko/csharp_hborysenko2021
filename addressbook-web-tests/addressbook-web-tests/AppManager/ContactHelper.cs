@@ -94,7 +94,7 @@ namespace WebAddressBookTests
             return IsElementPresent(By.Name("selected[]"));
         }
 
-        internal void CreateContactIfDoesntExists(ContactData contact)
+        public void CreateContactIfDoesntExists(ContactData contact)
         {
             if (IsContactElementExists())
             {
