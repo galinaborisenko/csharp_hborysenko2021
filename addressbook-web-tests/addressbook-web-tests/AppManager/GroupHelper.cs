@@ -96,6 +96,7 @@ namespace WebAddressBookTests
 
         public bool IsGroupElementExists()
         {
+            manager.Navigator.GoToGroupsPage();
             return IsElementPresent(By.Name("selected[]"));
         }
 
@@ -106,16 +107,10 @@ namespace WebAddressBookTests
                 return;
             }
             else
-            {             
+            {
                 Create(group);
             }
         }
-
-
-
-
-
-
-
     }
 }
+

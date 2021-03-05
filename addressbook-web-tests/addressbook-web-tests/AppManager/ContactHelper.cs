@@ -91,6 +91,7 @@ namespace WebAddressBookTests
 
         public bool IsContactElementExists()
         {
+            manager.Navigator.GoToHomePage();
             return IsElementPresent(By.Name("selected[]"));
         }
 
