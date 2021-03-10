@@ -68,7 +68,7 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
         public ContactHelper RemoveContact()
@@ -97,14 +97,22 @@ namespace WebAddressBookTests
 
         public void CreateContactIfDoesntExists(ContactData contact)
         {
-            if (IsContactElementExists())
-            {
-                return;
-            }
-            else
+            if (! IsContactElementExists())
             {
                 Create(contact);
+            }       
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=\"entry\"]"));
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text, element.Text));
             }
+            return contacts;
         }
     }
 }

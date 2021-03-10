@@ -18,10 +18,21 @@ namespace WebAddressBookTests
             app.Contacts.CreateContactIfDoesntExists(contact);
 
             //action
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             ContactData newData = new ContactData("AAFlala", "Llala");
             newData.Middlename = "";
-
             app.Contacts.Modify(newData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+
+            //verification  
+            oldContacts[0].Firstname=newData.Firstname;
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+           // Assert.AreEqual(oldContacts, newContacts); //compare data
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }
     }
 }

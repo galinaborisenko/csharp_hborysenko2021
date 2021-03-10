@@ -18,12 +18,23 @@ namespace WebAddressBookTests
             app.Groups.CreateGroupIfDoesntExists(group);
 
             //action
+            //1. get old list
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            //2. modify group
             GroupData newData = new GroupData("1zzz");
             newData.Header = "1tzzzest";
             newData.Footer = "1teszzzt";
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(0, newData);
+
+            //3. get new list
+            List<GroupData> newGroups = app.Groups.GetGroupList();
 
             //verification
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
         }
 
         [Test]
@@ -34,10 +45,21 @@ namespace WebAddressBookTests
             app.Groups.CreateGroupIfDoesntExists(group);
 
             //action
+            //1. get old list
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            //2. modify group
             GroupData newData = new GroupData("1zzz");
+            app.Groups.Modify(0, newData);
+
+            //3. get new list
+            List<GroupData> newGroups = app.Groups.GetGroupList();
 
             //verification
-            app.Groups.Modify(1, newData);
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
         }
     }
 }

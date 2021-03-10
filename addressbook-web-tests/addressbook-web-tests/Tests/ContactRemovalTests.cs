@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressBookTests
 {
@@ -17,9 +18,16 @@ namespace WebAddressBookTests
             app.Contacts.CreateContactIfDoesntExists(contact);
 
             //action
-            app.Contacts.Remove(1);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Remove(0);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
 
             //verification
+            //oldContacts.RemoveAt(0);
+            //Assert.AreEqual(oldContacts, newContacts); //compare data
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }
     }
 }
