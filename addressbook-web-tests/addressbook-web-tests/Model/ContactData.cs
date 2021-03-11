@@ -8,14 +8,10 @@ namespace WebAddressBookTests
 {
    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstName;
-        private string lastName;
-        private string middleName; //not mandatory field for ContactData, this why we not add to constructor 
-
         public ContactData(string firstName, string lastName)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            Firstname = firstName;
+            Lastname = lastName;
         }
 
         public override int GetHashCode()
@@ -51,43 +47,10 @@ namespace WebAddressBookTests
             return Lastname.CompareTo(other.Lastname);
         }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstName;
-            }
-            set
-            {
-                firstName = value;
-            }
-        }
+        public string Firstname { get; set; }      
 
-        public string Lastname
-        {
-            get
-            {
-                return lastName;
-            }
-            set
-            {
-                lastName = value;
-            }
-        }
-
-        public string Middlename
-        {
-            get
-            {
-                return middleName;
-            }
-            set
-            {
-                middleName = value;
-            }
-        }
-
-
-
+        public string Lastname { get; set;  }
+        
+        public string Middlename { get; set; }  
     }
 }

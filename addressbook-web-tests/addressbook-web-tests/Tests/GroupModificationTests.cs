@@ -14,12 +14,14 @@ namespace WebAddressBookTests
         public void GroupModificationTest()
         {
             //prepare
-            GroupData group = new GroupData("grouptomodify");
-            app.Groups.CreateGroupIfDoesntExists(group);
+            GroupData newgroup = new GroupData("grouptomodify");
+            app.Groups.CreateGroupIfDoesntExists(newgroup);
+
 
             //action
             //1. get old list
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
 
             //2. modify group
             GroupData newData = new GroupData("1zzz");
@@ -27,39 +29,50 @@ namespace WebAddressBookTests
             newData.Footer = "1teszzzt";
             app.Groups.Modify(0, newData);
 
-            //3. get new list
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-
             //verification
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount()); //compare count
+            List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
+
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldGroups[0].Id)
+                    Assert.AreEqual(newData.Name, group.Name);
+            }
         }
 
         [Test]
         public void GroupModificationTestOnlyName()
         {
             //prepare
-            GroupData group = new GroupData("grouptomodify");
-            app.Groups.CreateGroupIfDoesntExists(group);
+            GroupData newgroup = new GroupData("grouptomodify");
+            app.Groups.CreateGroupIfDoesntExists(newgroup);
 
             //action
             //1. get old list
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
 
             //2. modify group
             GroupData newData = new GroupData("1zzz");
             app.Groups.Modify(0, newData);
 
-            //3. get new list
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-
             //verification
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount()); //compare count
+            List<GroupData> newGroups = app.Groups.GetGroupList();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
+
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldGroups[0].Id)
+                Assert.AreEqual(newData.Name, group.Name);
+            }
         }
     }
 }
