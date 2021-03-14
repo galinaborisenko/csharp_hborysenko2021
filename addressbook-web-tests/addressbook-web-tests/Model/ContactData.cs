@@ -16,9 +16,10 @@ namespace WebAddressBookTests
 
         public override int GetHashCode()
         {
-            return (Firstname.GetHashCode() + Lastname.GetHashCode());
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
         }
 
+       //which objects are equal, use if hashcode returns different values for two objects
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(other, null)) //nothing with compare to
@@ -29,22 +30,34 @@ namespace WebAddressBookTests
             {
                 return true;
             }
-            return (Lastname == other.Lastname); //if First and Last name the same - mean the same object for us
+            if (Lastname !=other.Lastname) //false if Lastname different
+            {
+                return false;
+            }
+            return Firstname == other.Firstname; //if First and Last name the same - mean the same object for us
         }
 
+        //строковое представление обекта contact
         public override string ToString()
-        {
-            return "First Name:" + Firstname + " " + "Last Name:" + Lastname;
+         {
+            return "LastName:" + Lastname +" "+  "FirstName:" + Firstname;
         }
 
-        //sort list: other - with who compare, 1-this>other, 0-this=other, -1-this<other
+        //sort list: 1-this>other, 0-this=other, -1-this<other
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return Lastname.CompareTo(other.Lastname);
+            if (Lastname.CompareTo(other.Lastname) == 0)
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+            else 
+            {
+                return Lastname.CompareTo(other.Lastname);
+            }          
         }
 
         public string Firstname { get; set; }      

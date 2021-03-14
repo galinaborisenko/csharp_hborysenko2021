@@ -20,7 +20,7 @@ namespace WebAddressBookTests
             //action
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            ContactData newData = new ContactData("AAFlala", "Llala");
+            ContactData newData = new ContactData("Halyna", "Borysenko");
             newData.Middlename = "";
             app.Contacts.Modify(newData);
 
@@ -31,7 +31,9 @@ namespace WebAddressBookTests
             oldContacts[0].Lastname = newData.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
-           // Assert.AreEqual(oldContacts, newContacts); //compare data
+            Console.WriteLine(string.Join("\n", oldContacts));
+            Console.WriteLine(string.Join("\n", newContacts));
+            Assert.AreEqual(oldContacts, newContacts); //compare data
             Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }
     }

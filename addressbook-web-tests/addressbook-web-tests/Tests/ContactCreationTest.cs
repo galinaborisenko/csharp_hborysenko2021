@@ -20,15 +20,19 @@ namespace WebAddressBookTests
             //action
             //1. get old list
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            
             //2. create 
             app.Contacts.Create(contact);
             //3. get new list 
             List<ContactData> newContacts = app.Contacts.GetContactList();
+           
 
             //verification  
             oldContacts.Add(contact);
             oldContacts.Sort();
+            Console.WriteLine(string.Join("\n", oldContacts));
             newContacts.Sort();
+            Console.WriteLine(string.Join("\n", newContacts));
             Assert.AreEqual(oldContacts, newContacts); //compare data
             Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }
