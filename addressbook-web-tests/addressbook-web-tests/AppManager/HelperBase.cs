@@ -53,6 +53,10 @@ namespace WebAddressBookTests
                 return false;
             }
         }
-
+          public void WaitUntilElementNotVisible(By searchElementBy, int timeoutInSeconds)
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds))
+                            .Until(drv => !IsElementPresent(searchElementBy));
+        }
     }
 }

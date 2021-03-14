@@ -14,7 +14,7 @@ namespace WebAddressBookTests
         public void ContactCreationTest()
         {
             //preparation
-            ContactData contact = new ContactData("Mary", "Lee");
+            ContactData contact = new ContactData("Oleh", "Bory");
             contact.Middlename = "middle";
 
             //action
@@ -32,8 +32,8 @@ namespace WebAddressBookTests
             newContacts.Sort();
             Console.WriteLine(string.Join("\n", oldContacts));           
             Console.WriteLine(string.Join("\n", newContacts));
-            //Assert.AreEqual(oldContacts, newContacts); //compare data
+            Assert.AreEqual(oldContacts, newContacts); //compare data
             Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
-        }
+        }     
     }
 }

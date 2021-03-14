@@ -64,6 +64,8 @@ namespace WebAddressBookTests
 
         public string Lastname { get; set;  }
         
-        public string Middlename { get; set; }  
+        public string Middlename { get; set; }
+
+        public string Id { get; set; }
     }
 }

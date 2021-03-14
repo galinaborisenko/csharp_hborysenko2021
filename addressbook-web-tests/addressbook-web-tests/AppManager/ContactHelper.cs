@@ -36,8 +36,7 @@ namespace WebAddressBookTests
         public ContactHelper Remove(int p)
         {
             SelectContact(p);
-            RemoveContact();           
-           // manager.Navigator.GoToHomePage();
+            RemoveContact();
             return this;
         }
 
@@ -70,13 +69,14 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("(//input[@onclick='DeleteSel()'])")).Click();
             driver.SwitchTo().Alert().Accept();
+            WaitUntilElementNotVisible(By.CssSelector(".msgbox [text*=\"deleted\"]"), 5);
             contactsCache = null;
             return this;
         }
@@ -101,10 +101,10 @@ namespace WebAddressBookTests
 
         public void CreateContactIfDoesntExists(ContactData contact)
         {
-            if (! IsContactElementExists())
+            if (!IsContactElementExists())
             {
                 Create(contact);
-            }       
+            }
         }
 
         private List<ContactData> contactsCache = null;
@@ -117,10 +117,16 @@ namespace WebAddressBookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=\"entry\"]"));
                 foreach (IWebElement element in elements)
                 {
-                    contactsCache.Add(new ContactData(element.Text, element.Text));
+                    String s = element.Text;
+                    contactsCache.Add((new ContactData(s.Substring(s.LastIndexOf(" ") + 1), s.Substring(0, s.IndexOf(" "))) //first argument  - the last word of string; second argument - the first name of string  
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                    }));
+                  }
                 }
+                return new List<ContactData>(contactsCache);
             }
-            return new List<ContactData>(contactsCache);
+
         }
     }
-}
+   

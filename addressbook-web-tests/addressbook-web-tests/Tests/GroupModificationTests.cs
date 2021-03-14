@@ -36,7 +36,6 @@ namespace WebAddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
-
             foreach (GroupData group in newGroups)
             {
                 if (group.Id == oldGroups[0].Id)
@@ -67,7 +66,6 @@ namespace WebAddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
-
             foreach (GroupData group in newGroups)
             {
                 if (group.Id == oldGroups[0].Id)
