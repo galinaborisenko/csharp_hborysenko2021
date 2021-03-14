@@ -21,13 +21,15 @@ namespace WebAddressBookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Remove(0);
-
+            
             List<ContactData> newContacts = app.Contacts.GetContactList();
 
             //verification
-            //oldContacts.RemoveAt(0);
-            //Assert.AreEqual(oldContacts, newContacts); //compare data
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
+            oldContacts.RemoveAt(0);
+            Console.WriteLine(string.Join("\n", oldContacts));
+            Console.WriteLine(string.Join("\n", newContacts));
+            Assert.AreEqual(oldContacts, newContacts); //compare data
+            //Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }
     }
 }

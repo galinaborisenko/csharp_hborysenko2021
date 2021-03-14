@@ -21,7 +21,7 @@ namespace WebAddressBookTests
             //action
             //1. get old list
             List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            //GroupData oldData = oldGroups[0];
 
             //2. modify group
             GroupData newData = new GroupData("1zzz");

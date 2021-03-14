@@ -36,7 +36,8 @@ namespace WebAddressBookTests
         public ContactHelper Remove(int p)
         {
             SelectContact(p);
-            RemoveContact();
+            RemoveContact();           
+           // manager.Navigator.GoToHomePage();
             return this;
         }
 
