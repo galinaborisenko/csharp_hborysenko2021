@@ -32,11 +32,9 @@ namespace WebAddressBookTests
             {
 
                 Address = address,
+                AllEmails = allEmails,
                 AllPhones = allPhones,
-                AllEmails = allEmails
             };
-
-            throw new NotImplementedException();
         }
 
         public ContactData GetContactInformationFromEditForm(int index)
@@ -47,9 +45,11 @@ namespace WebAddressBookTests
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
@@ -59,6 +59,7 @@ namespace WebAddressBookTests
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
                 Email = email,
                 Email2 = email2,
                 Email3 = email3
@@ -136,9 +137,9 @@ namespace WebAddressBookTests
         }
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElements(By.Name("entry"))[index]. //find row
-                FindElements(By.TagName("td"))[7].//find cell #7
-                FindElement(By.TagName("a")).Click(); ; 
+            driver.FindElements(By.Name("entry"))[index] //find row
+                .FindElements(By.TagName("td"))[7]//find cell #7
+                .FindElement(By.TagName("a")).Click(); ; 
             return this;
         }
 

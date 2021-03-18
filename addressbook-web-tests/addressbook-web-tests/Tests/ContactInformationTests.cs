@@ -21,8 +21,8 @@ namespace WebAddressBookTests
             Assert.AreEqual(fromTable, fromFrom);
             Assert.AreEqual(fromTable.Address, fromFrom.Address);
             Assert.AreEqual(fromTable.AllPhones, fromFrom.AllPhones);
-            Console.WriteLine(fromTable.AllEmails);
-            Console.WriteLine(fromFrom.AllEmails);
+            //Console.WriteLine(fromTable.AllPhones);
+            //Console.WriteLine(fromFrom.AllPhones);
             Assert.AreEqual(fromTable.AllEmails, fromFrom.AllEmails);
         }
 
