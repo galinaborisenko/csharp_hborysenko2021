@@ -11,11 +11,18 @@ namespace WebAddressBookTests
     {
         public string allPhones;
         public string allEmails;
+        public string contactInfo;
+        public string firstLastName;
 
         public ContactData(string firstName, string lastName)
         {
             Firstname = firstName;
             Lastname = lastName;
+        }
+
+        public ContactData(string firstLastName)
+        {
+            FirstLastName = firstLastName;
         }
 
         public override int GetHashCode()
@@ -117,13 +124,52 @@ namespace WebAddressBookTests
             }
         }
 
-        private string CleanUp(string phone)
+        public string FirstLastName
         {
-            if (phone == null || phone == "")
+            get
+            {
+                if (firstLastName != null)
+                {
+                    return firstLastName;
+                }
+                else
+                {
+                    return (CleanUp(Firstname)+CleanUp(Lastname)).Trim();
+                }
+            }
+            set
+            {
+                firstLastName = value;
+            }
+        }
+
+        public string ContactInfo
+        {
+            get
+            {
+                if (ContactInfo != null)
+                {
+                    return contactInfo;
+                }
+                else
+                {
+                    return (CleanUp(Address) + CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + 
+                        CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                }
+            }
+            set
+            {
+                contactInfo = value;
+            }
+        }
+
+        private string CleanUp(string data)
+        {
+            if (data == null || data == "")
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") +"\r\n";
+            return Regex.Replace(data, "[+_ -()]", "") +"\r\n";
 
         }
     }

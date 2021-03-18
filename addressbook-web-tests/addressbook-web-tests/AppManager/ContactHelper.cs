@@ -66,6 +66,28 @@ namespace WebAddressBookTests
             };
         }
 
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactDetails(index);
+            string firstLastName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;           
+            string contactInfo = driver.FindElement(By.Id("content")).FindElement(By.TagName("br")).Text;
+
+            return new ContactData(firstLastName)
+            {
+                FirstLastName = firstLastName,
+                ContactInfo = contactInfo,
+            };
+        }
+
+        private ContactHelper OpenContactDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index] //find row
+               .FindElements(By.TagName("td"))[6]//find cell #6
+               .FindElement(By.TagName("a")).Click(); ;
+            return this;
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();

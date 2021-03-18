@@ -9,8 +9,49 @@ namespace WebAddressBookTests
 {
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
-     {       
-        [Test]
+     {
+        public static IEnumerable<ContactData> RandomContactDataProvider()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+                {
+                    Middlename = GenerateRandomString(100)
+                });
+            }
+            return contacts;
+        }
+
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest()
+        {
+            //preparation
+            ContactData contact = new ContactData("Oleh", "Bory");
+            contact.Middlename = "middle";
+
+            //action
+            //1. get old list
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            
+            //2. create 
+            app.Contacts.Create(contact);
+
+
+            //verification  
+            List<ContactData> newContacts = app.Contacts.GetContactList();         
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Console.WriteLine(string.Join("\n", oldContacts));           
+            Console.WriteLine(string.Join("\n", newContacts));
+            Assert.AreEqual(oldContacts, newContacts); //compare data
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
+        }
+
+        /*
+         [Test]
         public void ContactCreationTest()
         {
             //preparation
@@ -35,5 +76,6 @@ namespace WebAddressBookTests
             Assert.AreEqual(oldContacts, newContacts); //compare data
             Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
         }     
+         */
     }
 }
