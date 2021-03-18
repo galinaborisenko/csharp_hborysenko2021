@@ -16,6 +16,55 @@ namespace WebAddressBookTests
         {
         }
 
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]. //find row, cells and save value from each
+               FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };
+
+            throw new NotImplementedException();
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
+            };
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
@@ -76,13 +125,20 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.XPath("(//input[@onclick='DeleteSel()'])")).Click();
             driver.SwitchTo().Alert().Accept();
-            WaitUntilElementNotVisible(By.CssSelector(".msgbox [text*=\"deleted\"]"), 5);
+            WaitUntilElementNotVisible(By.CssSelector("div.msgbox"), 5);
             contactsCache = null;
             return this;
         }
         public ContactHelper InitContactModification()
         {
             driver.FindElement(By.CssSelector(".center a[href*=\"edit\"]")).Click(); ;
+            return this;
+        }
+        public ContactHelper InitContactModification(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]. //find row
+                FindElements(By.TagName("td"))[7].//find cell #7
+                FindElement(By.TagName("a")).Click(); ; 
             return this;
         }
 
@@ -108,25 +164,27 @@ namespace WebAddressBookTests
         }
 
         private List<ContactData> contactsCache = null;
+
         public List<ContactData> GetContactList()
         {
             if (contactsCache == null)
             {
                 contactsCache = new List<ContactData>();
                 manager.Navigator.GoToHomePage();
-                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=\"entry\"]"));
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
                 foreach (IWebElement element in elements)
                 {
-                    String s = element.Text;
-                    contactsCache.Add((new ContactData(s.Substring(s.LastIndexOf(" ") + 1), s.Substring(0, s.IndexOf(" "))) //first argument  - the last word of string; second argument - the first name of string  
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    string lastName = cells[1].Text;
+                    string firstName = cells[2].Text;
+                    contactsCache.Add(new ContactData(firstName, lastName)
                     {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
-                    }));
-                  }
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")  //присвоить свойство контакту Id
+                    });
                 }
-                return new List<ContactData>(contactsCache);
             }
-
+            return new List<ContactData>(contactsCache);
         }
+      }
     }
    

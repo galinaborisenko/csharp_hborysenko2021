@@ -30,7 +30,7 @@ namespace WebAddressBookTests
             {
                 return true;
             }
-            return Name == other.Name;
+            return Name == other.Name; //the same as expression "return Name.Equals(other.Name)"
         }
         public override string ToString()
         {

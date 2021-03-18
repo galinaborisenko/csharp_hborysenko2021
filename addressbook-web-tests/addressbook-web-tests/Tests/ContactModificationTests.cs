@@ -20,7 +20,7 @@ namespace WebAddressBookTests
             //action
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            ContactData newData = new ContactData("Halyna", "Borysenko");
+            ContactData newData = new ContactData("Hal", "Bor");
             newData.Middlename = "";
             app.Contacts.Modify(newData);
 
