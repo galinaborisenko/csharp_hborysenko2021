@@ -87,6 +87,9 @@
     <Compile Include="Tests\__IfThenElse.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Tests\groups.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
