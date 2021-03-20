@@ -25,6 +25,10 @@ namespace WebAddressBookTests
             FirstLastName = firstLastName;
         }
 
+        public ContactData()
+        {
+        }
+
         public override int GetHashCode()
         {
             return Firstname.GetHashCode() + Lastname.GetHashCode();
