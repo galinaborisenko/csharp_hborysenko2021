@@ -13,6 +13,10 @@ namespace WebAddressBookTests
             Name = name;
         }
 
+        public GroupData()
+        {
+        }
+
         //firstly compare objects using GetHashCode()
         public override int GetHashCode()
         {
