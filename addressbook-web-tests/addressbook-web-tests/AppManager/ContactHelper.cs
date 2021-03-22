@@ -30,7 +30,6 @@ namespace WebAddressBookTests
 
             return new ContactData(firstName, lastName)
             {
-
                 Address = address,
                 AllEmails = allEmails,
                 AllPhones = allPhones,
@@ -56,6 +55,7 @@ namespace WebAddressBookTests
 
             return new ContactData(firstName, lastName)
             {
+                Middlename = middleName,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
@@ -66,17 +66,17 @@ namespace WebAddressBookTests
             };
         }
 
-        public ContactData GetContactInformationFromDetails(int index)
+        public ContactData GetContactInformationFromDetailsPage(int index)
         {
             manager.Navigator.GoToHomePage();
             OpenContactDetails(index);
-            string firstLastName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;           
-            string contactInfo = driver.FindElement(By.Id("content")).FindElement(By.TagName("br")).Text;
+            string contactFullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;           
+          //  string contactInfo = driver.FindElement(By.Id("content")).FindElement(By.TagName("br")).Text;
 
-            return new ContactData(firstLastName)
+            return new ContactData(contactFullName)
             {
-                FirstLastName = firstLastName,
-                ContactInfo = contactInfo,
+                ContactFullName = contactFullName,
+             //   ContactInfo = contactInfo,
             };
         }
 

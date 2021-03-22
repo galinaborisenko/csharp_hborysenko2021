@@ -27,15 +27,16 @@ namespace WebAddressBookTests
         }
 
         [Test]
-        public void ContactInfoTableAndDetailsTest()
+        public void ContactInfoTableAndDetailsPageTest()
         {
             //action
             ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
-            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(0);
+            ContactData fromDetails = app.Contacts.GetContactInformationFromDetailsPage(0);
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
 
             //verification
-            Assert.AreEqual(fromTable.FirstLastName, fromDetails.FirstLastName);
-            Assert.AreEqual(fromTable.ContactInfo, fromDetails.ContactInfo);
+            Assert.AreEqual(fromTable.Firstname + fromForm.Middlename + fromTable.Lastname, fromDetails.ContactFullName);
+           // Assert.AreEqual(fromTable.ContactInfo, fromDetails.ContactInfo);
         }
 
     }

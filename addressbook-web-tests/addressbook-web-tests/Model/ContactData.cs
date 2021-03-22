@@ -12,7 +12,7 @@ namespace WebAddressBookTests
         public string allPhones;
         public string allEmails;
         public string contactInfo;
-        public string firstLastName;
+        public string contactFullName;
 
         public ContactData(string firstName, string lastName)
         {
@@ -20,9 +20,9 @@ namespace WebAddressBookTests
             Lastname = lastName;
         }
 
-        public ContactData(string firstLastName)
+        public ContactData(string contactFullName)
         {
-            FirstLastName = firstLastName;
+            ContactFullName = contactFullName;
         }
 
         public ContactData()
@@ -128,25 +128,26 @@ namespace WebAddressBookTests
             }
         }
 
-        public string FirstLastName
+        public string ContactFullName
         {
             get
             {
-                if (firstLastName != null)
+                if (contactFullName != null)
                 {
-                    return firstLastName;
+                    return contactFullName;
                 }
                 else
                 {
-                    return (CleanUp(Firstname)+CleanUp(Lastname)).Trim();
+                    return (Firstname + " "+ Middlename+ " " + Lastname );
                 }
             }
             set
             {
-                firstLastName = value;
+                contactFullName = value;
             }
         }
 
+        /*
         public string ContactInfo
         {
             get
@@ -165,7 +166,7 @@ namespace WebAddressBookTests
             {
                 contactInfo = value;
             }
-        }
+        }*/
 
         private string CleanUp(string data)
         {
