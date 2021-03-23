@@ -70,13 +70,10 @@ namespace WebAddressBookTests
         {
             manager.Navigator.GoToHomePage();
             OpenContactDetails(index);
-            string contactFullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;           
-          //  string contactInfo = driver.FindElement(By.Id("content")).FindElement(By.TagName("br")).Text;
-
-            return new ContactData(contactFullName)
+            string contactDetailedInfo = driver.FindElement(By.Id("content")).Text;
+            return new ContactData()
             {
-                ContactFullName = contactFullName,
-             //   ContactInfo = contactInfo,
+                ContactDetailedInfo = contactDetailedInfo,
             };
         }
 

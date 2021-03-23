@@ -91,8 +91,8 @@ namespace addressbook_test_data_generators
             Excel.Application app = new Excel.Application();
             app.Visible = true;
             Excel.Workbook wb = app.Workbooks.Add();
-            Excel.Worksheet sheet = (Excel.Worksheet)wb.ActiveSheet;
-            sheet.Cells[1, 1] = "test";
+            //Excel.Worksheet sheet = wb.ActiveSheet;
+            //sheet.Cells[1, 1] = "test";
 
         }
 

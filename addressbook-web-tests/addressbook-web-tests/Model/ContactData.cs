@@ -11,18 +11,12 @@ namespace WebAddressBookTests
     {
         public string allPhones;
         public string allEmails;
-        public string contactInfo;
-        public string contactFullName;
+        private string contactDetailedInfo;
 
         public ContactData(string firstName, string lastName)
         {
             Firstname = firstName;
             Lastname = lastName;
-        }
-
-        public ContactData(string contactFullName)
-        {
-            ContactFullName = contactFullName;
         }
 
         public ContactData()
@@ -82,12 +76,19 @@ namespace WebAddressBookTests
         public string Middlename { get; set; }
 
         public string Id { get; set; }
+
         public string Address { get; set; }
+
         public string HomePhone { get; set; }
+
         public string MobilePhone { get; set; }
+
         public string WorkPhone { get; set; }
+
         public string Email { get; set; }
+
         public string Email2 { get; set; }
+
         public string Email3 { get; set; }
         
         public string AllPhones 
@@ -100,7 +101,10 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return 
+                        (CleanUpForContactInfoTableAndEditFormTest(HomePhone) +
+                        CleanUpForContactInfoTableAndEditFormTest(MobilePhone) + 
+                        CleanUpForContactInfoTableAndEditFormTest(WorkPhone)).Trim();
                 }
             }
             set 
@@ -119,7 +123,10 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return (CleanUp(Email)+CleanUp(Email2)+ CleanUp(Email3)).Trim();
+                    return 
+                        (CleanUpForContactInfoTableAndEditFormTest(Email)+ 
+                        CleanUpForContactInfoTableAndEditFormTest(Email2)+
+                        CleanUpForContactInfoTableAndEditFormTest(Email3)).Trim();
                 }
             }
             set
@@ -128,54 +135,76 @@ namespace WebAddressBookTests
             }
         }
 
-        public string ContactFullName
+        public string ContactDetailedInfo
         {
             get
             {
-                if (contactFullName != null)
+                if (contactDetailedInfo != null)
                 {
-                    return contactFullName;
+                    return contactDetailedInfo;
                 }
                 else
                 {
-                    return (Firstname + " "+ Middlename+ " " + Lastname );
+                    return
+
+                        (CleanUpForContactInfoEditFormAndDetailsPageTest(Firstname) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(Middlename) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(Lastname) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(Address) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(HomePhone) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(MobilePhone) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(WorkPhone) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest (Email) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(Email2) +
+                        CleanUpForContactInfoEditFormAndDetailsPageTest(Email3)).Trim();
                 }
             }
             set
             {
-                contactFullName = value;
+                contactDetailedInfo = value;
             }
         }
 
-        /*
-        public string ContactInfo
-        {
-            get
-            {
-                if (ContactInfo != null)
-                {
-                    return contactInfo;
-                }
-                else
-                {
-                    return (CleanUp(Address) + CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + 
-                        CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
-                }
-            }
-            set
-            {
-                contactInfo = value;
-            }
-        }*/
-
-        private string CleanUp(string data)
+        private string CleanUpForContactInfoTableAndEditFormTest(string data)
         {
             if (data == null || data == "")
             {
                 return "";
             }
-            return Regex.Replace(data, "[+_ -()]", "") +"\r\n";
+            return Regex.Replace(data, "[+_ -()]", "") + "\r\n";
+        }
 
+        private string CleanUpForContactInfoEditFormAndDetailsPageTest(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+            else if (data == Firstname || data == Middlename)
+            {
+                return Regex.Replace(data, "[+_()]", "") + " ";
+            }
+            else if (data == Address)
+            {
+                return "\r\n" + Regex.Replace(data, "[+_()]", "") + "\r\n";
+            }
+            else if (data == HomePhone)
+            {
+                return "\r\nH: " + Regex.Replace(data, "[+_()]", "");
+            }
+            else if (data == MobilePhone)
+            {
+                return "\r\nM: " + Regex.Replace(data, "[+_()]", "");
+            }
+            else if (data == WorkPhone)
+            {
+                return "\r\nW: " + Regex.Replace(data, "[+_()]", "") + "\r\n";
+            }
+            else if (data == Email || data == Email2 || data == Email3)
+            {
+                return "\r\n" + Regex.Replace(data, "[+_()]", "");
+            }
+            return Regex.Replace(data, "[+_()]", "");
         }
     }
 }
