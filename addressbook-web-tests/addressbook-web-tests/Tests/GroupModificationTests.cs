@@ -8,37 +8,37 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()
         {
             //prepare
-            GroupData newgroup = new GroupData("grouptomodify");
-            app.Groups.CreateGroupIfDoesntExists(newgroup);
+            GroupData newGroup = new GroupData("grouptomodify");
+            app.Groups.CreateGroupIfDoesntExists(newGroup);
 
 
             //action
             //1. get old list
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            //GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeModified = oldGroups[0];
 
             //2. modify group
             GroupData newData = new GroupData("1zzz");
             newData.Header = "1tzzzest";
             newData.Footer = "1teszzzt";
-            app.Groups.Modify(0, newData);
+            app.Groups.Modify(toBeModified, newData);
 
             //verification
-            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount()); //compare count
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAll();
+            Assert.AreEqual(oldGroups.Count, newGroups.Count); //compare count
+            toBeModified.Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
             foreach (GroupData group in newGroups)
             {
-                if (group.Id == oldGroups[0].Id)
+                if (group.Id == toBeModified.Id)
                     Assert.AreEqual(newData.Name, group.Name);
             }
         }
@@ -47,29 +47,29 @@ namespace WebAddressBookTests
         public void GroupModificationTestOnlyName()
         {
             //prepare
-            GroupData newgroup = new GroupData("grouptomodify");
-            app.Groups.CreateGroupIfDoesntExists(newgroup);
+            GroupData newGroup = new GroupData("grouptomodify");
+            app.Groups.CreateGroupIfDoesntExists(newGroup);
 
             //action
             //1. get old list
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-            GroupData oldData = oldGroups[0];
+           List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeModified = oldGroups[0];
 
             //2. modify group
             GroupData newData = new GroupData("1zzz");
-            app.Groups.Modify(0, newData);
+            app.Groups.Modify(toBeModified, newData);
 
             //verification
-            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount()); //compare count
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAll();
+            Assert.AreEqual(oldGroups.Count, newGroups.Count); //compare count
+            toBeModified.Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data (the old list with the new list)
             foreach (GroupData group in newGroups)
             {
-                if (group.Id == oldGroups[0].Id)
-                Assert.AreEqual(newData.Name, group.Name);
+                if (group.Id == toBeModified.Id)
+                    Assert.AreEqual(newData.Name, group.Name);
             }
         }
     }

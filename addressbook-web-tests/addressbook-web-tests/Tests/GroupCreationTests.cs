@@ -6,20 +6,21 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
             for (int i = 0; i < 5; i++)
-            { 
-             groups.Add(new GroupData(GenerateRandomString(30))
+            {
+                groups.Add(new GroupData(GenerateRandomString(30))
                 {
                     Header = GenerateRandomString(100),
                     Footer = GenerateRandomString(100)
@@ -47,8 +48,8 @@ namespace WebAddressBookTests
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
             List<GroupData> groups = new List<GroupData>();
-            return (List<GroupData>) 
-                new XmlSerializer(typeof(List<GroupData>)) 
+            return (List<GroupData>)
+                new XmlSerializer(typeof(List<GroupData>))
                 .Deserialize(new StreamReader(@"groups.xml")); //приведение типа
         }
 
@@ -61,22 +62,36 @@ namespace WebAddressBookTests
 
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
-        {          
+        {
             //action
             //1. get old list
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             //2. create 
             app.Groups.Create(group);
 
             //verification
-            Assert.AreEqual(oldGroups.Count+1, app.Groups.GetGroupCount()); //compare count
-            List<GroupData> newGroups = app.Groups.GetGroupList(); //get new list    
+            List<GroupData> newGroups = GroupData.GetAll(); //get new list    
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //compare data
             Assert.AreEqual(oldGroups.Count, newGroups.Count);  //compare count
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
         }
 
         /*[Test]
@@ -126,5 +141,6 @@ namespace WebAddressBookTests
             Assert.AreEqual(oldGroups.Count, newGroups.Count);  //compare count
         }
        */
-    }
+   
+   }
 }

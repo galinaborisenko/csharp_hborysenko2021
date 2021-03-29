@@ -93,7 +93,6 @@ namespace addressbook_test_data_generators
             Excel.Workbook wb = app.Workbooks.Add();
             //Excel.Worksheet sheet = wb.ActiveSheet;
             //sheet.Cells[1, 1] = "test";
-
         }
 
         static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
