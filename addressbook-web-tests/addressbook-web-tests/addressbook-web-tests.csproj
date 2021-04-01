@@ -129,6 +129,8 @@
     <Compile Include="AppManager\GroupHelper.cs" />
     <Compile Include="AppManager\AuthTestBase.cs" />
     <Compile Include="Model\AddressBookDB.cs" />
+    <Compile Include="Model\GroupContactRelation.cs" />
+    <Compile Include="Tests\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\ContactModificationTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Tests\ContactCreationTest.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
+    <Compile Include="Tests\RemoveContactFromGroupTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
     <Compile Include="Tests\__ForWhile.cs" />
     <Compile Include="Tests\__IfThenElse.cs" />

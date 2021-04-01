@@ -97,6 +97,9 @@ namespace WebAddressBookTests
         public string Email2 { get; set; }
 
         public string Email3 { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
         
         public string AllPhones 
         {
@@ -212,6 +215,14 @@ namespace WebAddressBookTests
                 return "\r\n" + Regex.Replace(data, "[+_()]", "");
             }
             return Regex.Replace(data, "[+_()]", "");
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
+            };
         }
     }
 }

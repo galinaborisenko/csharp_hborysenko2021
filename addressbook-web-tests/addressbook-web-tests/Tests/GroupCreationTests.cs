@@ -94,6 +94,23 @@ namespace WebAddressBookTests
 
         }
 
+        [Test]
+        public void TestDBConnectivity1()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts()){
+                System.Console.Out.WriteLine(contact);
+            }
+        }
+
+        [Test]
+        public void TestDBConnectivity2()
+        {
+            foreach (ContactData contact in ContactData.GetAll()){
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
+        }
+
+
         /*[Test]
         public void EmptyGroupCreationTest()
         {
@@ -141,6 +158,6 @@ namespace WebAddressBookTests
             Assert.AreEqual(oldGroups.Count, newGroups.Count);  //compare count
         }
        */
-   
-   }
+
+    }
 }
