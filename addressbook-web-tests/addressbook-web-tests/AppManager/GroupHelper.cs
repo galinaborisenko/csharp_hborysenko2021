@@ -111,7 +111,7 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(string id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
 

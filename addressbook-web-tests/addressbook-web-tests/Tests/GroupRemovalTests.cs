@@ -19,14 +19,14 @@ namespace WebAddressBookTests
 
             //action
             //1. get old list
-            List<GroupData> oldGroups = GroupData.GetAll();
+            List<GroupData> oldGroups = GroupData.GetAll(); // list from DB
             GroupData toBeRemoved = oldGroups[0];
 
             //2. remove
             app.Groups.Remove(toBeRemoved);
 
             //verification
-            List<GroupData> newGroups = GroupData.GetAll();
+            List<GroupData> newGroups = GroupData.GetAll(); // list from DB
             Assert.AreEqual(oldGroups.Count - 1, newGroups.Count); //compare count
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups); //compare value

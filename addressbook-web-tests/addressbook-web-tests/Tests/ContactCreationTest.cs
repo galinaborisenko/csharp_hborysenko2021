@@ -47,14 +47,14 @@ namespace WebAddressBookTests
         {
             //action
             //1. get old list
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             
             //2. create 
             app.Contacts.Create(contact);
 
 
             //verification  
-            List<ContactData> newContacts = app.Contacts.GetContactList();         
+            List<ContactData> newContacts = ContactData.GetAll();         
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

@@ -17,20 +17,17 @@ namespace WebAddressBookTests
             GroupData newGroup = new GroupData("grouptomodify");
             app.Groups.CreateGroupIfDoesntExists(newGroup);
 
+            List<GroupData> oldGroups = GroupData.GetAll(); //get old list from DB
+            GroupData toBeModified = oldGroups[0]; 
 
             //action
-            //1. get old list
-            List<GroupData> oldGroups = GroupData.GetAll();
-            GroupData toBeModified = oldGroups[0];
-
-            //2. modify group
             GroupData newData = new GroupData("1zzz");
             newData.Header = "1tzzzest";
             newData.Footer = "1teszzzt";
             app.Groups.Modify(toBeModified, newData);
 
             //verification
-            List<GroupData> newGroups = GroupData.GetAll();
+            List<GroupData> newGroups = GroupData.GetAll(); //get new list from DB
             Assert.AreEqual(oldGroups.Count, newGroups.Count); //compare count
             toBeModified.Name = newData.Name;
             oldGroups.Sort();
@@ -50,12 +47,10 @@ namespace WebAddressBookTests
             GroupData newGroup = new GroupData("grouptomodify");
             app.Groups.CreateGroupIfDoesntExists(newGroup);
 
-            //action
-            //1. get old list
            List<GroupData> oldGroups = GroupData.GetAll();
-            GroupData toBeModified = oldGroups[0];
+           GroupData toBeModified = oldGroups[0];
 
-            //2. modify group
+            //action
             GroupData newData = new GroupData("1zzz");
             app.Groups.Modify(toBeModified, newData);
 

@@ -65,7 +65,7 @@ namespace WebAddressBookTests
         {
             //action
             //1. get old list
-            List<GroupData> oldGroups = GroupData.GetAll();
+            List<GroupData> oldGroups = GroupData.GetAll(); //get from DB
 
             //2. create 
             app.Groups.Create(group);

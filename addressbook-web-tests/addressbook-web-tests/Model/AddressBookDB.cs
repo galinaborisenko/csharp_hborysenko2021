@@ -11,7 +11,7 @@ namespace WebAddressBookTests
     {
         public AddressBookDB() : base("AddressBook") {  }
 
-        public ITable<GroupData> Groups { get { return GetTable<GroupData>(); } }
+        public ITable<GroupData> Groups { get { return GetTable<GroupData>(); } } //method that return group table
         
         public ITable<ContactData> Contacts { get { return GetTable<ContactData>(); } }
 

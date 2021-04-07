@@ -18,18 +18,19 @@ namespace WebAddressBookTests
             app.Contacts.CreateContactIfDoesntExists(newcontact);
 
             //action
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            //1. get old list
+            List<ContactData> oldContacts = ContactData.GetAll(); //from DB
+            ContactData toBeRemoved = oldContacts[0];
 
-            app.Contacts.Remove(0);
+            app.Contacts.Remove(toBeRemoved);
 
             //verification
             //Thread.Sleep(5000);
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-            ContactData toBeRemoved = oldContacts[0];
+            List<ContactData> newContacts = ContactData.GetAll(); //from DB
+            Assert.AreEqual(oldContacts.Count - 1, newContacts.Count);  //compare count
             oldContacts.RemoveAt(0);
             //Console.WriteLine(string.Join("\n", oldContacts));
-            //Console.WriteLine(string.Join("\n", newContacts));
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);  //compare count
+            //Console.WriteLine(string.Join("\n", newContacts));           
             Assert.AreEqual(oldContacts, newContacts); //compare data
             foreach (ContactData group in newContacts)
             {
